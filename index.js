@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 })
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 // const uri = "mongodb+srv://<username>:<password>@cluster0.8mn4lkn.mongodb.net/?retryWrites=true&w=majority";
 const uri = `mongodb+srv://${process.env.DP_USER}:${process.env.DB_PASS}@cluster0.8mn4lkn.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -39,11 +39,38 @@ async function run() {
         const intelCollection = database.collection("intel");
 
 
-        app.get('/iphone', async (req, res) => {
+        // apple
+        app.get('/apple', async (req, res) => {
             const query = iphoneCollection.find()
             const result = await query.toArray()
             res.send(result)
         })
+
+        app.get('/apple/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await iphoneCollection.findOne(query)
+            res.send(result)
+        })
+        app.put('/apple/:id', async (req, res) => {
+            const id = req.params.id;
+            const update = req.body
+            const filter = { _id: new ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    name: update.name,
+                    brand: update.brand,
+                    price: update.price,
+                    photo: update.photo,
+                    rating: update.rating,
+                    type: update.type
+                }
+            }
+            const result = await iphoneCollection.updateOne(filter, updateDoc)
+            res.send(result)
+        })
+
+
 
         // google
         app.get('/google', async (req, res) => {
@@ -51,6 +78,32 @@ async function run() {
             const result = await query.toArray()
             res.send(result)
         })
+        app.get('/google/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await googleCollection.findOne(query)
+            res.send(result)
+        })
+        app.put('/google/:id', async (req, res) => {
+            const id = req.params.id;
+            const update = req.body
+            const filter = { _id: new ObjectId(id) }
+            const updateDoc = {
+                $set: {
+
+                    name: update.name,
+                    brand: update.brand,
+                    price: update.price,
+                    photo: update.photo,
+                    rating: update.rating,
+                    type: update.type
+                }
+            }
+            const result = await googleCollection.updateOne(filter, updateDoc)
+            res.send(result)
+        })
+
+
 
         // samsung
         app.get('/samsung', async (req, res) => {
@@ -58,6 +111,31 @@ async function run() {
             const result = await query.toArray()
             res.send(result)
         })
+        app.get('/samsung/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await samsungCollection.findOne(query)
+            res.send(result)
+        })
+        app.put('/samsung/:id', async (req, res) => {
+            const id = req.params.id;
+            const update = req.body
+            const filter = { _id: new ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    name: update.name,
+                    brand: update.brand,
+                    price: update.price,
+                    photo: update.photo,
+                    rating: update.rating,
+                    type: update.type
+                }
+            }
+            const result = await samsungCollection.updateOne(filter, updateDoc)
+            res.send(result)
+        })
+
+
 
         // sony
         app.get('/sony', async (req, res) => {
@@ -65,11 +143,60 @@ async function run() {
             const result = await query.toArray()
             res.send(result)
         })
+        app.get('/sony/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await sonyCollection.findOne(query)
+            res.send(result)
+        })
+        app.put('/sony/:id', async (req, res) => {
+            const id = req.params.id;
+            const update = req.body
+            const filter = { _id: new ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    name: update.name,
+                    brand: update.brand,
+                    price: update.price,
+                    photo: update.photo,
+                    rating: update.rating,
+                    type: update.type
+                }
+            }
+            const result = await sonyCollection.updateOne(filter, updateDoc)
+            res.send(result)
+        })
 
-        // sony
+
+
+
+        // intel
         app.get('/intel', async (req, res) => {
             const query = intelCollection.find()
             const result = await query.toArray()
+            res.send(result)
+        })
+        app.get('/intel/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await intelCollection.findOne(query)
+            res.send(result)
+        })
+        app.put('/intel/:id', async (req, res) => {
+            const id = req.params.id;
+            const update = req.body
+            const filter = { _id: new ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    name: update.name,
+                    brand: update.brand,
+                    price: update.price,
+                    photo: update.photo,
+                    rating: update.rating,
+                    type: update.type
+                }
+            }
+            const result = await intelCollection.updateOne(filter, updateDoc)
             res.send(result)
         })
 
