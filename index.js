@@ -37,7 +37,44 @@ async function run() {
         const samsungCollection = database.collection("samsung");
         const sonyCollection = database.collection("sony");
         const intelCollection = database.collection("intel");
+        const clientCollection = database.collection("client");
+        const cartCollection = database.collection("cart");
 
+
+        // cart
+
+        app.post('/cart', async (req, res) => {
+            const cartProduct = req.body
+            const result = await cartCollection.insertOne(cartProduct)
+            res.send(result)
+        })
+
+        app.get('/cart', async (req, res) => {
+            const query = cartCollection.find()
+            const result = await query.toArray()
+            res.send(result)
+        })
+
+        app.delete('/cart/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await cartCollection.deleteOne(query)
+            res.send(result)
+        })
+
+
+        // client
+        app.post('/client', async (req, res) => {
+            const clientProduct = req.body
+            const result = await clientCollection.insertOne(clientProduct)
+            res.send(result)
+        })
+
+        app.get('/client', async (req, res) => {
+            const query = clientCollection.find()
+            const result = await query.toArray()
+            res.send(result)
+        })
 
         // apple
         app.get('/apple', async (req, res) => {
@@ -199,7 +236,6 @@ async function run() {
             const result = await intelCollection.updateOne(filter, updateDoc)
             res.send(result)
         })
-
 
 
         // Send a ping to confirm a successful connection
