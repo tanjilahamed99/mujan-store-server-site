@@ -29,7 +29,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
 
         const database = client.db("mujanDB");
         const iphoneCollection = database.collection("iphone");
@@ -92,7 +92,8 @@ async function run() {
                     price: update.price,
                     photo: update.photo,
                     rating: update.rating,
-                    type: update.type
+                    type: update.type,
+                    desc: update.desc
                 }
             }
             const result = await iphoneCollection.updateOne(filter, updateDoc)
@@ -132,7 +133,8 @@ async function run() {
                     price: update.price,
                     photo: update.photo,
                     rating: update.rating,
-                    type: update.type
+                    type: update.type,
+                    desc: update.desc
                 }
             }
             const result = await googleCollection.updateOne(filter, updateDoc)
@@ -170,7 +172,8 @@ async function run() {
                     price: update.price,
                     photo: update.photo,
                     rating: update.rating,
-                    type: update.type
+                    type: update.type,
+                    desc: update.desc
                 }
             }
             const result = await samsungCollection.updateOne(filter, updateDoc)
@@ -207,7 +210,8 @@ async function run() {
                     price: update.price,
                     photo: update.photo,
                     rating: update.rating,
-                    type: update.type
+                    type: update.type,
+                    desc: update.desc
                 }
             }
             const result = await sonyCollection.updateOne(filter, updateDoc)
@@ -246,7 +250,8 @@ async function run() {
                     price: update.price,
                     photo: update.photo,
                     rating: update.rating,
-                    type: update.type
+                    type: update.type,
+                    desc: update.desc
                 }
             }
             const result = await intelCollection.updateOne(filter, updateDoc)
@@ -256,42 +261,7 @@ async function run() {
 
 
         // mii
-        app.post('/mi', async (req, res) => {
-            const newProduct = req.body
-            const result = await miCollection.insertOne(newProduct)
-            res.send(result)
-        })
-
-        app.get('/mi', async (req, res) => {
-            const query = miCollection.find()
-            const result = await query.toArray()
-            res.send(result)
-        })
-        app.get('/mi/:id', async (req, res) => {
-            const id = req.params.id
-            const query = { _id: new ObjectId(id) }
-            const result = await miCollection.findOne(query)
-            res.send(result)
-        })
-        app.put('/mi/:id', async (req, res) => {
-            const id = req.params.id;
-            const update = req.body
-            const filter = { _id: new ObjectId(id) }
-            const updateDoc = {
-                $set: {
-                    name: update.name,
-                    brand: update.brand,
-                    price: update.price,
-                    photo: update.photo,
-                    rating: update.rating,
-                    type: update.type
-                }
-            }
-            const result = await miCollection.updateOne(filter, updateDoc)
-            res.send(result)
-        })
-
-
+        
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
