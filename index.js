@@ -50,7 +50,7 @@ async function run() {
         })
 
 
-        // cart
+        // car
         app.post('/cart', async (req, res) => {
             const cartProduct = req.body
             const result = await cartCollection.insertOne(cartProduct)
