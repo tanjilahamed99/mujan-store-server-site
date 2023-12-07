@@ -39,18 +39,28 @@ async function run() {
         const intelCollection = database.collection("intel");
         const miCollection = database.collection("mi");
         const cartCollection = database.collection("cart");
+        const newsLatterCollection = database.collection("newsLatter");
+
+
+        // newLatter
+        app.post('/newsLatter', async (req, res) => {
+            const email = req.body.email
+            const result = await newsLatterCollection.insertOne({ email: email })
+            res.send(result)
+        })
 
 
         // cart
-
         app.post('/cart', async (req, res) => {
             const cartProduct = req.body
             const result = await cartCollection.insertOne(cartProduct)
             res.send(result)
         })
 
-        app.get('/cart', async (req, res) => {
-            const query = cartCollection.find()
+        app.get('/cart/:email', async (req, res) => {
+            const email = req.params.email
+            const filter = { email: email }
+            const query = cartCollection.find(filter)
             const result = await query.toArray()
             res.send(result)
         })
@@ -65,6 +75,7 @@ async function run() {
         // apple
         app.post('/apple', async (req, res) => {
             const newProduct = req.body
+            console.log(newProduct)
             const result = await iphoneCollection.insertOne(newProduct)
             res.send(result)
         })
@@ -105,6 +116,7 @@ async function run() {
         // google
         app.post('/google', async (req, res) => {
             const newProduct = req.body
+            console.log(newProduct)
             const result = await googleCollection.insertOne(newProduct)
             res.send(result)
         })
@@ -146,6 +158,7 @@ async function run() {
         // samsung
         app.post('/samsung', async (req, res) => {
             const newProduct = req.body
+            console.log(newProduct)
             const result = await samsungCollection.insertOne(newProduct)
             res.send(result)
         })
@@ -185,6 +198,7 @@ async function run() {
         // sony
         app.post('/sony', async (req, res) => {
             const newProduct = req.body
+            console.log(newProduct)
             const result = await sonyCollection.insertOne(newProduct)
             res.send(result)
         })
@@ -224,6 +238,7 @@ async function run() {
         // intel
         app.post('/intel', async (req, res) => {
             const newProduct = req.body
+            console.log(newProduct)
             const result = await intelCollection.insertOne(newProduct)
             res.send(result)
         })
@@ -261,7 +276,7 @@ async function run() {
 
 
         // mii
-        
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
