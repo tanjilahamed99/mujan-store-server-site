@@ -72,7 +72,7 @@ async function run() {
             res.send(result)
         })
 
-        // apple
+        // apple related apis
         app.post('/apple', async (req, res) => {
             const newProduct = req.body
             console.log(newProduct)
